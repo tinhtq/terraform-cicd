@@ -46,6 +46,7 @@ jobs:
          run: |
            echo "Manually approved"
 
+
   apply_terraform:
     name: Apply Terraform
     needs: [manual-approve]
