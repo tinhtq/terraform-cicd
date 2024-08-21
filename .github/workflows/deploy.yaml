@@ -1,0 +1,76 @@
+name: Deploy to AWS
+on
+  push:
+    branches:
+      - main  # Change this to the branch you want to deploy on push
+env:
+  AWS_REGION: ap-south-2
+jobs:
+  terraform:
+    name: Terraform Plan
+    runs-on: ubuntu-latest
+    needs: check_app
+    defaults:
+      run:
+        working-directory: terraform/${{ needs.check_app.outputs.folder }}/${{ needs.check_app.outputs.folder }}_${{ github.event.inputs.application }}
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        ref: ${{ github.event.inputs.branch }}
+
+    - name: Set up Terraform
+      uses: hashicorp/setup-terraform@v3
+      with:
+        terraform_version: 1.7.5 
+
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ env.AWS_REGION }}
+
+    - name: Terraform Init
+      run: terraform init
+
+    - name: Terraform Validate
+      run: terraform validate
+
+    - name: Terraform Plan
+      id: terraform-plan
+      run: terraform plan 
+
+
+#   apply_terraform:
+#     name: Apply Terraform
+#     needs: [terraform, check_app]
+#     runs-on: ubuntu-latest
+#     environment: ${{ github.event.inputs.environment }}
+#     defaults:
+#       run:
+#         working-directory: terraform/${{ needs.check_app.outputs.folder }}/${{ needs.check_app.outputs.folder }}_${{ github.event.inputs.application }}    
+#     steps:
+#     - name: Checkout repository
+#       uses: actions/checkout@v4
+#       with:
+#         ref: ${{ github.event.inputs.branch }}
+  
+#     - name: Set up Terraform
+#       uses: hashicorp/setup-terraform@v3
+#       with:
+#         terraform_version: 1.7.5
+
+#     - name: Configure AWS Credentials
+#       uses: aws-actions/configure-aws-credentials@v4
+#       with:
+#         aws-access-key-id: ${{ secrets[format('{0}_{1}', 'AWS_ACCESS_KEY_ID', needs.check_app.outputs.folder)] }}
+#         aws-secret-access-key: ${{ secrets[format('{0}_{1}', 'AWS_SECRET_ACCESS_KEY', needs.check_app.outputs.folder)] }}
+#         aws-region: ${{ env.AWS_REGION }}
+
+#     - name: Terraform Init
+#       run: terraform init
+  
+
+#     - name: Apply Terraform
+#       run: terraform apply -auto-approve
