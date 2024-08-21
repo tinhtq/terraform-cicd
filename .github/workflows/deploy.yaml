@@ -37,7 +37,7 @@ jobs:
       id: terraform-plan
       run: terraform plan 
     - uses: trstringer/manual-approval@v1
-        with:
+      with:
         secret: ${{ github.TOKEN }}
         approvers: tinhtq
         minimum-approvals: 1
