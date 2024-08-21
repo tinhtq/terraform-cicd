@@ -1,4 +1,8 @@
 name: Deploy to AWS
+
+permissions:
+  issues: write
+
 on:
   push:
     branches:
