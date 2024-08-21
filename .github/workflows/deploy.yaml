@@ -1,5 +1,5 @@
 name: Deploy to AWS
-on
+on:
   push:
     branches:
       - main  # Change this to the branch you want to deploy on push
