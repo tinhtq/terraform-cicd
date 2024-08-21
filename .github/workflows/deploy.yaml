@@ -6,7 +6,7 @@ on:
 env:
   AWS_REGION: ap-south-2
 jobs:
-  terraform:
+  terraform-plan:
     name: Terraform Plan
     runs-on: ubuntu-latest
     steps:
@@ -36,8 +36,8 @@ jobs:
     - name: Terraform Plan
       id: terraform-plan
       run: terraform plan 
-  ManualApprove:
-    needs: TerraformShow
+  manual-approve:
+    needs: terraform-plan
     environment:
       name: approvers
     runs-on: ubuntu-latest
