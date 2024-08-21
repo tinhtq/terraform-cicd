@@ -52,7 +52,7 @@ jobs:
     needs: check_app
     defaults:
       run:
-        working-directory: ${{ needs.check_app.outputs.folder }}/${{ needs.check_app.outputs.folder }}_${{ github.event.inputs.application }}
+        working-directory: terraform/${{ needs.check_app.outputs.folder }}/${{ needs.check_app.outputs.folder }}_${{ github.event.inputs.application }}
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
