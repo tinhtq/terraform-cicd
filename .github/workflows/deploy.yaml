@@ -47,16 +47,16 @@ jobs:
         additional-approved-words: ''
         additional-denied-words: ''
 
-  apply_terraform:
-    name: Apply Terraform
-    needs: [manual-approve]
-    runs-on: ubuntu-latest
-    environment: ${{ github.event.inputs.environment }}
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-      with:
-        ref: ${{ github.event.inputs.branch }}
+#   apply_terraform:
+#     name: Apply Terraform
+#     needs: [manual-approve]
+#     runs-on: ubuntu-latest
+#     environment: ${{ github.event.inputs.environment }}
+#     steps:
+#     - name: Checkout repository
+#       uses: actions/checkout@v4
+#       with:
+#         ref: ${{ github.event.inputs.branch }}
   
 #     - name: Set up Terraform
 #       uses: hashicorp/setup-terraform@v3
