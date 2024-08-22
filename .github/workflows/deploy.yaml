@@ -21,11 +21,11 @@ on:
       application:
         description: 'Application to deploy'
         required: true
-        default: 'app2'
+        default: 'application1'
         type: choice
         options:
-        - app1
-        - app2
+        - application1
+        - application2
 env:
   AWS_REGION: us-east-1     
 jobs:
