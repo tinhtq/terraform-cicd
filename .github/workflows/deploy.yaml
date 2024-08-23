@@ -12,12 +12,12 @@ on:
       environment:
         description: 'Environment to deploy to'
         required: true
-        default: 'ab-development-app1'
+        default: 'develop'
         type: choice
         options:
-        - ab-development-app1
-        - ab-uat-app1
-        - ab-prod-app1
+        - develop
+        - uat
+        - production
       application:
         description: 'Application to deploy'
         required: true
@@ -38,11 +38,11 @@ jobs:
       - name: Check Folder
         id: check_app
         run: |
-          if [[ "${{ github.event.inputs.environment }}" == "ab-development-app1" ]]; then
+          if [[ "${{ github.event.inputs.environment }}" == "develop" ]]; then
             echo "folder=dev" >> $GITHUB_OUTPUT
-          elif [[ "${{ github.event.inputs.environment }}" == "ab-uat-app1" ]]; then
+          elif [[ "${{ github.event.inputs.environment }}" == "uat" ]]; then
             echo "folder=uat" >> $GITHUB_OUTPUT
-          elif [[ "${{ github.event.inputs.environment }}" == "ab-prod-app1" ]]; then
+          elif [[ "${{ github.event.inputs.environment }}" == "production" ]]; then
             echo "folder=prod" >> $GITHUB_OUTPUT
           fi
 
