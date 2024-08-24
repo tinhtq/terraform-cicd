@@ -17,7 +17,7 @@ on:
         options:
         - develop
         - uat
-        - production
+        - prod
       application:
         description: 'Application to deploy'
         required: true
